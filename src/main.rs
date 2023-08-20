@@ -11,13 +11,23 @@ fn main() {
         let ev = d.next_event(ReadFlag::NORMAL).map(|val| val.1);
         match ev{
             Ok(ev) => 
-                if ev.event_code == EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_1) {
-                    println!("hella!");
-                    enigo.key_down(Key::Control);
-                    enigo.key_click(Key::Layout('z'));
-                    enigo.key_up(Key::Control);
-                } else {
-                    println!("incorrect");
+                match (ev.event_code, ev.value) {
+                    (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_1), 1) => { // undo
+                        println!("hella!");
+                        enigo.key_down(Key::Control);
+                        enigo.key_click(Key::Layout('z'));
+                        enigo.key_up(Key::Control);
+                    },
+                    (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_2), 1) => { // brush
+                        println!("brushie");
+                        enigo.key_click(Key::Layout('b'));
+                    },
+                    (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_3), 1) => { // insert and rename layer
+                        println!("wow");
+                        enigo.key_click(Key::Insert);
+                        enigo.key_click(Key::F2);
+                    },
+                    _ => ()
                 }
             Err(_) => (),
         }

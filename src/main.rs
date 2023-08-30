@@ -3,13 +3,13 @@ use evdev_rs::{Device, enums::EventCode};
 use evdev_rs::ReadFlag;
 
 fn main() {
-  let d = Device::new_from_path("/dev/input/by-id/usb-UGTABLET_10_inch_PenTablet-event-if02").unwrap();
+  let tablet = Device::new_from_path("/dev/input/by-id/usb-UGTABLET_10_inch_PenTablet-event-if02").unwrap();
 
   let mut enigo = Enigo::new();
 
   loop {
-    let ev = d.next_event(ReadFlag::NORMAL).map(|val| val.1);
-      match ev{
+    let tabEvent = tablet.next_event(ReadFlag::NORMAL).map(|val| val.1);
+      match tabEvent{
         Ok(ev) => 
           match (ev.event_code, ev.value) {
             (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_0), 1) => { // brush

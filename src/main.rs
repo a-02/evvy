@@ -12,7 +12,7 @@ fn main() {
       match tabEvent{
         Ok(ev) => 
           match (ev.event_code, ev.value) {
-            (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_0), 1) => { // brush
+            (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_0), 1) => { // nothin much
               println!("i live");
           },
             (EventCode::EV_KEY(evdev_rs::enums::EV_KEY::BTN_1), 1) => { // undo
